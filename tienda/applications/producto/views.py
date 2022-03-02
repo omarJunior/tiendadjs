@@ -44,10 +44,9 @@ class FiltrarProductos(ListAPIView):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        #example = parametro get ?man = ""
-        varon = self.request.query_params.get('man', None)
-        mujer = self.request.query_params.get('woman', None)
-        nombre = self.request.query_params.get('name', None)
-        print("**************************")
-        print(varon, mujer, nombre)
-        return []
+        #example = parametro get ?man=""
+        return Product.objects.filtrar_productos(
+            man =  self.request.query_params.get('man'),
+            woman = self.request.query_params.get('woman'),
+            name = self.request.query_params.get('name')
+        )
