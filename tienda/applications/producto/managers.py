@@ -7,10 +7,12 @@ class ProductManager(models.Manager):
         return self.filter(
             user_created = usuario
         )
-
+        
+    """  """
     def productos_con_stock(self):
         return self.filter(stok__gt = 0).order_by('-num_sales')
 
+    """  """
     def productos_por_genero(self, genero):
         #lista productos por generos
         if genero == "m":
@@ -23,3 +25,11 @@ class ProductManager(models.Manager):
             mujer = True
             varon = True
         return self.filter(woman = mujer, man = varon)
+
+    """  """
+    def filtrar_productos(self, **filtros):
+        return self.filter(
+            man = filtros['man'],
+            woman = filtros['woman'],
+            name__icontains = filtros['name']
+        )
