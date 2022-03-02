@@ -2,3 +2,6 @@
 tienda/applications/home/migrations/*
 #
 tienda/applications/users/migrations/*
+env
+secret.json
+fbkey.json
