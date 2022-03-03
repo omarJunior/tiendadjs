@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Sale, SaleDetail
 
 class VentaReporteSerializer(serializers.ModelSerializer):
-	productos = serializers.SerializerMethodField(method_name="get_productos")
+	productos = serializers.SerializerMethodField()
 
 	class Meta:
 		model = Sale
