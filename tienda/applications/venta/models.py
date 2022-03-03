@@ -6,6 +6,7 @@ from model_utils.models import TimeStampedModel
 
 # local apps
 from applications.producto.models import Product
+from .managers import SaleDetailManager
 
 
 class Sale(TimeStampedModel):
@@ -30,45 +31,16 @@ class Sale(TimeStampedModel):
         ('3', 'Entregado'),
     )
 
-    date_sale = models.DateTimeField(
-        'Fecha de Venta',
-        blank=True,
-        null=True
-    )
-    amount = models.DecimalField(
-        'Monto', 
-        max_digits=10, 
-        decimal_places=2
-    )
+    date_sale = models.DateTimeField('Fecha de Venta', blank=True, null=True)
+    amount = models.DecimalField('Monto', max_digits=10, decimal_places=2)
     count = models.PositiveIntegerField('Cantidad de Productos')
-    type_invoce = models.CharField(
-        'TIPO',
-        max_length=2,
-        choices=TIPO_INVOCE
-    )
+    type_invoce = models.CharField('TIPO', max_length=2, choices=TIPO_INVOCE)
     cancelado = models.BooleanField(default=False)
-    type_payment = models.CharField(
-        'TIPO PAGO',
-        max_length=2,
-        choices=TIPO_PAYMENT
-    )
-    state = models.CharField(
-        'Estado de Envio',
-        max_length=2,
-        choices=FLAT_STATE,
-        blank=True
-    )
-    adreese_send = models.TextField(
-        'Direccion de Envio',
-        blank=True,
-    )
+    type_payment = models.CharField('TIPO PAGO', max_length=2, choices=TIPO_PAYMENT)
+    state = models.CharField('Estado de Envio', max_length=2, choices=FLAT_STATE, blank=True)
+    adreese_send = models.TextField('Direccion de Envio', blank=True)
     anulate = models.BooleanField(default=False)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="usuario_venta",
-        #editable=False
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="usuario_venta")
 
     class Meta:
         verbose_name = 'Venta'
@@ -78,33 +50,18 @@ class Sale(TimeStampedModel):
         return 'Nº [' + str(self.id) + '] - ' + str(self.date_sale)
 
 
-
 class SaleDetail(TimeStampedModel):
     """Modelo que representa a una venta en detalle"""
 
-    sale = models.ForeignKey(
-        Sale, 
-        on_delete=models.CASCADE, 
-        verbose_name='Codigo de Venta'
-    )
-    product = models.ForeignKey(
-        Product, 
-        on_delete=models.CASCADE
-    )
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE, verbose_name='Codigo de Venta')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.PositiveIntegerField('Cantidad')
-    price_purchase = models.DecimalField(
-        'Precio Compra', 
-        max_digits=10, 
-        decimal_places=3
-    )
-    price_sale = models.DecimalField(
-        'Precio Venta', 
-        max_digits=10, 
-        decimal_places=2
-    )
+    price_purchase = models.DecimalField('Precio Compra', max_digits=10, decimal_places=3)
+    price_sale = models.DecimalField('Precio Venta', max_digits=10, decimal_places=2)
     anulate = models.BooleanField(default=False)
-    #
 
+    objects = SaleDetailManager()
+    
     class Meta:
         verbose_name = 'Detalle Venta'
         verbose_name_plural = 'Detalles de una Venta'
