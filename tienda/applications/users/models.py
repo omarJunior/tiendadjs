@@ -14,21 +14,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True)
     full_name = models.CharField('Nombres', max_length=100)
-    city = models.CharField(
-        'Ocupacion',
-        max_length=30, 
-        blank=True
-    )
-    genero = models.CharField(
-        max_length=1, 
-        choices=GENDER_CHOICES, 
-        blank=True
-    )
-    date_birth = models.DateField(
-        'Fecha de nacimiento', 
-        blank=True,
-        null=True
-    )
+    city = models.CharField('Ocupacion', max_length=30, blank=True)
+    genero = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    date_birth = models.DateField('Fecha de nacimiento', blank=True, null=True)
     #
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
