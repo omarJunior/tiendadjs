@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('applications.producto.urls')),
     #urls venta
     path('', include('applications.venta.urls')),
+    path('api/', include('applications.producto.routers')),
 ]
