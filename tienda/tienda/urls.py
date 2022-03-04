@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from tienda.api_urls import urlpatterns as urlsApi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,5 @@ urlpatterns = [
     path('', include('applications.producto.urls')),
     #urls venta
     path('', include('applications.venta.urls')),
-    path('api/', include('applications.producto.routers')),
+    path('api-rest/', include(urlsApi)),
 ]
