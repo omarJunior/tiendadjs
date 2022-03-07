@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+import utils
 #
 from model_utils.models import TimeStampedModel
 
@@ -12,32 +12,13 @@ from .managers import SaleDetailManager
 class Sale(TimeStampedModel):
     """Modelo que representa a una Venta Global"""
 
-    TIPO_INVOCE = (
-        ('0', 'BOLETA'),
-        ('3', 'FACTURA'),
-        ('4', 'OTRO'),
-    )
-
-    TIPO_PAYMENT = (
-        ('0', 'TARJETA'),
-        ('1', 'DEPOSITO'),
-        ('2', 'CONTRAENTREGA'),
-    )
-
-    FLAT_STATE = (
-        ('0', 'En Proceso'),
-        ('1', 'En Envio'),
-        ('2', 'En Tienda'),
-        ('3', 'Entregado'),
-    )
-
     date_sale = models.DateTimeField('Fecha de Venta', blank=True, null=True)
     amount = models.DecimalField('Monto', max_digits=10, decimal_places=2)
     count = models.PositiveIntegerField('Cantidad de Productos')
-    type_invoce = models.CharField('TIPO', max_length=2, choices=TIPO_INVOCE)
+    type_invoce = models.CharField('TIPO', max_length=2, choices=utils.TIPO_INVOCE)
     cancelado = models.BooleanField(default=False)
-    type_payment = models.CharField('TIPO PAGO', max_length=2, choices=TIPO_PAYMENT)
-    state = models.CharField('Estado de Envio', max_length=2, choices=FLAT_STATE, blank=True)
+    type_payment = models.CharField('TIPO PAGO', max_length=2, choices=utils.TIPO_PAYMENT)
+    state = models.CharField('Estado de Envio', max_length=2, choices=utils.FLAT_STATE, blank=True)
     adreese_send = models.TextField('Direccion de Envio', blank=True)
     anulate = models.BooleanField(default=False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="usuario_venta")
