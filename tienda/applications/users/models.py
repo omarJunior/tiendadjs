@@ -1,3 +1,4 @@
+import utils
 from django.db import models
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
@@ -6,16 +7,10 @@ from .managers import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    GENDER_CHOICES = (
-        ('M', 'Masculino'),
-        ('F', 'Femenino'),
-        ('O', 'Otros'),
-    )
-
     email = models.EmailField(unique=True)
     full_name = models.CharField('Nombres', max_length=100)
     city = models.CharField('Ocupacion', max_length=30, blank=True)
-    genero = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
+    genero = models.CharField(max_length=1, choices=utils.GENDER_CHOICES, blank=True)
     date_birth = models.DateField('Fecha de nacimiento', blank=True, null=True)
     #
     is_staff = models.BooleanField(default=False)
